@@ -386,13 +386,13 @@ mkdir -p ${work_dir}
 
 run_once make_pacman_conf
 run_once make_basefs
-run_once make_packages
-run_once make_setup_mkinitcpio
 run_once make_aur_packages
 run_once make_offline_mirror
 run_once patch_in_local_mirror
 run_once install_aur
 run_once finalize_offline
+run_once make_packages
+run_once make_setup_mkinitcpio
 run_once make_customize_airootfs
 run_once make_boot
 run_once make_boot_extra
