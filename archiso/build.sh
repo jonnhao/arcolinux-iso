@@ -391,7 +391,7 @@ done
 mkdir -p ${work_dir}
 
 run_once make_pacman_conf
-run_once make_aur_packages
+make_aur_packages
 run_once make_offline_mirror
 run_once patch_in_local_mirror
 run_once install_aur
