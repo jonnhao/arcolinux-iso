@@ -261,6 +261,9 @@ make_prepare() {
 }
 
 build_aur () {
+     echo "###################################################################"
+    tput setaf 3;echo "3. build AUR";tput sgr0
+    echo "###################################################################"
     # TODO: Create a temp dir that isn't just the package name,
     #       just in case there's a freak accidental name collision
     old_dir=`pwd`
