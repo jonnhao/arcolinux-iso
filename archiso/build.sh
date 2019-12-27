@@ -2,10 +2,10 @@
 
 set -e -u
 
-iso_name=flutteros
-iso_label="flutteros-v19.12.17"
-iso_publisher="FlutterOS <http://flutteros.com>"
-iso_application="FlutterOS Live/Rescue CD"
+iso_name=arcolinux
+iso_label="arcolinux-v19.12.17"
+iso_publisher="ArcoLinux <http://www.arcolinux.info>"
+iso_application="ArcoLinux Live/Rescue CD"
 iso_version="v19.12.17"
 install_dir=arch
 work_dir=work
@@ -91,7 +91,7 @@ make_setup_mkinitcpio() {
     local _hook
     mkdir -p ${work_dir}/x86_64/airootfs/etc/initcpio/hooks
     mkdir -p ${work_dir}/x86_64/airootfs/etc/initcpio/install
-    for _hook in archiso archiso_shutdown archiso_loop_mnt; do
+    for _hook in archiso archiso_shutdown archiso_pxe_common archiso_pxe_nbd archiso_pxe_http archiso_pxe_nfs archiso_loop_mnt; do
         cp /usr/lib/initcpio/hooks/${_hook} ${work_dir}/x86_64/airootfs/etc/initcpio/hooks
         cp /usr/lib/initcpio/install/${_hook} ${work_dir}/x86_64/airootfs/etc/initcpio/install
     done
@@ -260,7 +260,6 @@ make_prepare() {
     # rm -rf ${work_dir}/x86_64/airootfs (if low space, this helps)
 }
 
-# Build aur
 build_aur () {
     # TODO: Create a temp dir that isn't just the package name,
     #       just in case there's a freak accidental name collision
@@ -348,6 +347,7 @@ Server = file:///srv/http/arch_offline/os/x86_64/
 EOF
 }
 
+
 # Build ISO
 make_iso() {
     echo "###################################################################"
@@ -386,12 +386,13 @@ mkdir -p ${work_dir}
 
 run_once make_pacman_conf
 run_once make_basefs
+run_once make_packages
 run_once make_aur_packages
 run_once make_offline_mirror
 run_once patch_in_local_mirror
 run_once install_aur
 run_once finalize_offline
-run_once make_packages
+
 run_once make_setup_mkinitcpio
 run_once make_customize_airootfs
 run_once make_boot
